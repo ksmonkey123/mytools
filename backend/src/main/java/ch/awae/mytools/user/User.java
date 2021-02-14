@@ -1,6 +1,7 @@
 package ch.awae.mytools.user;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,9 +17,9 @@ public class User {
     @Column(nullable = false, length = 72)
     private String password;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "role", nullable = false)
-    private Set<String> roles;
+    private Set<String> roles = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -38,5 +39,9 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
     }
 }
