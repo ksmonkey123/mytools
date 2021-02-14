@@ -6,19 +6,26 @@ import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
+import {UserService} from "./user/user.service";
+import { UserComponent } from './user/user.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

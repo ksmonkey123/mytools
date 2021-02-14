@@ -1,17 +1,15 @@
-package ch.awae.mytools.config.security;
+package ch.awae.mytools.security;
 
 import ch.awae.mytools.user.User;
-import ch.awae.mytools.user.UserRespository;
+import ch.awae.mytools.user.UserRepository;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,9 +17,9 @@ import java.util.stream.Collectors;
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private final PasswordEncoder encoder;
-    private final UserRespository repo;
+    private final UserRepository repo;
 
-    public CustomAuthenticationProvider(PasswordEncoder encoder, UserRespository repo) {
+    public CustomAuthenticationProvider(PasswordEncoder encoder, UserRepository repo) {
         this.encoder = encoder;
         this.repo = repo;
     }
@@ -30,7 +28,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         List<SimpleGrantedAuthority> roles = user.getRoles().stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
-        return new UsernamePasswordAuthenticationToken(user.getUsername(), null, roles);
+        return new UsernamePasswordAuthenticationToken(new UserInfo(user), null, roles);
     }
 
     @Override

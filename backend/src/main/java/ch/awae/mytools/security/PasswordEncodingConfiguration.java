@@ -1,4 +1,4 @@
-package ch.awae.mytools.config.security;
+package ch.awae.mytools.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

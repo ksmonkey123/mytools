@@ -1,4 +1,4 @@
-package ch.awae.mytools.config.security;
+package ch.awae.mytools.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

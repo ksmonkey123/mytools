@@ -1,1 +1,52 @@
-<router-outlet></router-outlet>
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">MyAwae</a>
+  <button class="navbar-toggler btn btn-outline-primary" type="button" data-toggle="collapse"
+          data-target="#navbarTogglerDemo02"
+          aria-expanded="false" aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed"
+          [attr.aria-expanded]="!isCollapsed"
+          aria-controls="navbarTogglerDemo02">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div *ngIf="user" class="collapse navbar-collapse" id="navbarTogglerDemo02" [ngbCollapse]="isCollapsed">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li *ngFor="let item of links" class="nav-item">
+        <a class="nav-link" [routerLink]="item.route">{{item.text}}</a>
+      </li>
+    </ul>
+    <div ngbDropdown class="d-inline-block">
+      <button class="btn text-white btn-outline-primary" id="dropdownBasic1"
+              ngbDropdownToggle>{{user.name}}</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="{{isCollapsed ? 'dropdown-menu-right' : '' }}">
+        <button class="dropdown-item" (click)="openSettings()">Settings</button>
+        <!-- <button class="dropdown-item" (click)="openAdminPanel()" *ngIf="isAdmin">Admin Panel</button> -->
+        <!-- <button class="dropdown-item" (click)="doLogout()">Logout</button> -->
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="mt-5 p-4 pt-5">
+  <p *ngFor="let alert of alerts">
+    <ngb-alert [type]="alert.type" (closed)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+  </p>
+  <ng-template *ngIf="dangerModalData" #dangerModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{dangerModalData.action}}?</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      This action cannot be reverted!
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger"
+              (click)="modal.close('Delete click')">{{dangerModalData.action}}</button>
+    </div>
+  </ng-template>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+

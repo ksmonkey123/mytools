@@ -1,4 +1,4 @@
-package ch.awae.mytools.config.security;
+package ch.awae.mytools.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -17,6 +17,7 @@ public class DevSecurityConfiguration extends SecurityConfiguration {
 
     @Override
     protected void setupAuthMethod(HttpSecurity http) throws Exception {
+        http.csrf().disable();
         http.httpBasic();
     }
 }
