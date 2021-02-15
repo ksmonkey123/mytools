@@ -44,8 +44,11 @@ public class UserController {
     }
 
     static class PasswordChangeRequest {
-        public @NotEmpty String password;
-        public @NotEmpty @Size(min = 8) String newPassword;
+        @NotEmpty
+        public String password;
+        @NotEmpty
+        @Size(min = 8)
+        public String newPassword;
     }
 
     @Secured("ROLE_ADMIN")
@@ -62,14 +65,19 @@ public class UserController {
     }
 
     static class UserCreationRequest {
-        public @NotEmpty @Size(min = 5, max = 20) String username;
-        public @NotEmpty @Size(min = 8) String password;
+        @NotEmpty
+        @Size(min = 5, max = 20)
+        public String username;
+        @NotEmpty
+        @Size(min = 8)
+        public String password;
     }
 
     @Secured("ROLE_ADMIN")
     @PatchMapping("/{userId}/role")
-    public UserInfo patchUserRoles(@PathVariable("userId") long userId, @Valid @RequestBody RolePatchRequest request) {
-        User user = repo.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found"));
+    public UserInfo patchUserRoles(@PathVariable long userId, @Valid @RequestBody RolePatchRequest request) {
+        User user = repo.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found"));
         if (request.add) {
             return new UserInfo(service.addRole(user, request.role));
         } else {
@@ -79,7 +87,24 @@ public class UserController {
 
     static class RolePatchRequest {
         public boolean add;
-        public @NotEmpty @Role String role;
+        @NotEmpty
+        @Role
+        public String role;
+    }
+
+    @Secured("ROLE_ADMIN")
+    @PostMapping("/{userId}/password")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void changeUserPassword(@PathVariable long userId, @Valid @RequestBody AdminPasswordChangeRequest request) {
+        User user = repo.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found"));
+        service.changePassword(user, null, request.password);
+    }
+
+    static class AdminPasswordChangeRequest {
+        @NotEmpty
+        @Size(min = 8)
+        public String password;
     }
 
 }
