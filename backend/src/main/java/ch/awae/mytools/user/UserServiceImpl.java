@@ -35,6 +35,9 @@ public class UserServiceImpl implements UserService {
         if (oldPassword != null && !encoder.matches(oldPassword, user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad credentials");
         }
+        if ("admin".equals(user.getUsername())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "cannot change password of default user");
+        }
         user.setPassword(encoder.encode(newPassword));
     }
 
