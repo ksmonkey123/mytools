@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @Configuration
 @EnableWebSecurity
 @Profile("!dev")
-public class ProdSecurityConfiguration extends SecurityConfiguration {
+public class ProdSecurityConfiguration extends SecurityConfigurationBase {
 
     @Autowired
     public ProdSecurityConfiguration(CustomAuthenticationProvider authProvider) {

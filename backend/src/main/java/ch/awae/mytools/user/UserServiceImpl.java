@@ -30,8 +30,9 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(NoSuchElementException::new);
     }
 
+    @Nonnull
     @Override
-    public void changePassword(@Nonnull User user, @Nullable String oldPassword, @Nonnull String newPassword) {
+    public User changePassword(@Nonnull User user, @Nullable String oldPassword, @Nonnull String newPassword) {
         if (oldPassword != null && !encoder.matches(oldPassword, user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad credentials");
         }
@@ -39,6 +40,7 @@ public class UserServiceImpl implements UserService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "cannot change password of default user");
         }
         user.setPassword(encoder.encode(newPassword));
+        return user;
     }
 
     @Nonnull
@@ -78,6 +80,16 @@ public class UserServiceImpl implements UserService {
             }
         }
         user.getRoles().remove(role);
+        return user;
+    }
+
+    @Nonnull
+    @Override
+    public User setUserEnabledFlag(@Nonnull User user, boolean active) {
+        if (!active && AuthInfo.getUserInfo().getId() == user.getId()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "cannot disable yourself!");
+        }
+        user.setEnabled(active);
         return user;
     }
 }

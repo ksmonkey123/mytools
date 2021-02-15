@@ -24,7 +24,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         this.repo = repo;
     }
 
-    private static Authentication buildAuthHolder(User user) {
+    Authentication buildAuthHolder(User user) {
         List<SimpleGrantedAuthority> roles = user.getRoles().stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
@@ -34,9 +34,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         return repo.findByUsername(authentication.getName())
-                .filter(user -> !user.isDisabled())
+                .filter(User::isEnabled)
                 .filter(user -> encoder.matches(authentication.getCredentials().toString(), user.getPassword()))
-                .map(CustomAuthenticationProvider::buildAuthHolder)
+                .map(this::buildAuthHolder)
                 .orElse(null);
     }
 

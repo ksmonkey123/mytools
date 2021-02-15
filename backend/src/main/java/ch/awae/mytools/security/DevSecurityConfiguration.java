@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @Configuration
 @EnableWebSecurity
 @Profile("dev")
-public class DevSecurityConfiguration extends SecurityConfiguration {
+public class DevSecurityConfiguration extends SecurityConfigurationBase {
 
     public DevSecurityConfiguration(CustomAuthenticationProvider authProvider) {
         super(authProvider);

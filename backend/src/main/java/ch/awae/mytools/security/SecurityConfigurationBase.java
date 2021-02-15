@@ -5,12 +5,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-public abstract class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public abstract class SecurityConfigurationBase extends WebSecurityConfigurerAdapter {
 
     private final CustomAuthenticationProvider authProvider;
 
     @Autowired
-    public SecurityConfiguration(CustomAuthenticationProvider authProvider) {
+    public SecurityConfigurationBase(CustomAuthenticationProvider authProvider) {
         this.authProvider = authProvider;
     }
 

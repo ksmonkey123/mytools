@@ -21,7 +21,7 @@ public class User {
     @Column(name = "role", nullable = false)
     private Set<String> roles = new HashSet<>();
 
-    private boolean disabled;
+    private boolean enabled;
 
     public Long getId() {
         return id;
@@ -47,11 +47,11 @@ public class User {
         return roles;
     }
 
-    public boolean isDisabled() {
-        return disabled;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

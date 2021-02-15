@@ -28,7 +28,7 @@ public class UserInfo implements Principal {
     }
 
     public boolean isActive() {
-        return !user.isDisabled();
+        return user.isEnabled();
     }
 
 }

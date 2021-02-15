@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface UserService {
 
-    @Nonnull User getCurrentUser();
+    @Nonnull
+    User getCurrentUser();
 
-    void changePassword(@Nonnull User user, @Nullable String oldPassword, @Nonnull String newPassword);
+    @Nonnull
+    User changePassword(@Nonnull User user, @Nullable String oldPassword, @Nonnull String newPassword);
 
     @Nonnull
     User createUser(@Nonnull String username, @Nonnull String password);
@@ -20,4 +22,7 @@ public interface UserService {
 
     @Nonnull
     User removeRole(@Nonnull User user, @Nonnull String role);
+
+    @Nonnull
+    User setUserEnabledFlag(@Nonnull User user, boolean active);
 }

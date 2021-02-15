@@ -93,18 +93,23 @@ public class UserController {
     }
 
     @Secured("ROLE_ADMIN")
-    @PostMapping("/{userId}/password")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void changeUserPassword(@PathVariable long userId, @Valid @RequestBody AdminPasswordChangeRequest request) {
+    @PatchMapping("/{userId}")
+    public UserInfo patchUser(@PathVariable long userId, @Valid @RequestBody PatchUserRequest request) {
         User user = repo.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found"));
-        service.changePassword(user, null, request.password);
+        if (request.password != null) {
+            user = service.changePassword(user, null, request.password);
+        }
+        if (request.active != null) {
+            user = service.setUserEnabledFlag(user, request.active);
+        }
+        return new UserInfo(user);
     }
 
-    static class AdminPasswordChangeRequest {
-        @NotEmpty
+    static class PatchUserRequest {
         @Size(min = 8)
         public String password;
+        public Boolean active;
     }
 
 }
