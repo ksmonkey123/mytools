@@ -22,9 +22,7 @@ public class InitialUserCreationRunner implements CommandLineRunner {
     public void run(String... args) {
         Optional<User> admin = repo.findByUsername("admin");
         if (!admin.isPresent()) {
-            User user = new User();
-            user.setUsername("admin");
-            service.changePassword(user, null, "password");
+            User user = service.createUser("admin", "password");
             user.getRoles().add("ROLE_ADMIN");
             repo.saveAndFlush(user);
         }

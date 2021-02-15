@@ -2,6 +2,7 @@ package ch.awae.mytools.security;
 
 import ch.awae.mytools.user.User;
 
+import javax.annotation.Nonnull;
 import java.security.Principal;
 import java.util.Set;
 
@@ -9,7 +10,7 @@ public class UserInfo implements Principal {
 
     private final User user;
 
-    UserInfo(User user) {
+    public UserInfo(@Nonnull User user) {
         this.user = user;
     }
 
