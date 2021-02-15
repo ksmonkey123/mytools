@@ -27,4 +27,8 @@ public class UserInfo implements Principal {
         return user.getRoles();
     }
 
+    public boolean isActive() {
+        return !user.isDisabled();
+    }
+
 }

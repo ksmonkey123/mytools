@@ -34,6 +34,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         return repo.findByUsername(authentication.getName())
+                .filter(user -> !user.isDisabled())
                 .filter(user -> encoder.matches(authentication.getCredentials().toString(), user.getPassword()))
                 .map(CustomAuthenticationProvider::buildAuthHolder)
                 .orElse(null);

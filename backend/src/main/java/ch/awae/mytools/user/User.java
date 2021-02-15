@@ -21,6 +21,8 @@ public class User {
     @Column(name = "role", nullable = false)
     private Set<String> roles = new HashSet<>();
 
+    private boolean disabled;
+
     public Long getId() {
         return id;
     }
@@ -43,5 +45,13 @@ public class User {
 
     public Set<String> getRoles() {
         return roles;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
     }
 }
