@@ -81,7 +81,7 @@ export class AppComponent {
         break;
       }
       default: {
-        message = "Operation failed: " + status + " - " + alert.statusText + " : " + alert.error.message;
+        message = "Operation failed: " + status + " - " + alert.error.error + " : " + alert.error.message;
       }
     }
 

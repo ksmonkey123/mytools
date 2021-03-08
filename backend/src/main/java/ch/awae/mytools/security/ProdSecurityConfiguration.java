@@ -20,6 +20,7 @@ public class ProdSecurityConfiguration extends SecurityConfigurationBase {
 
     @Override
     protected void setupAuthMethod(HttpSecurity http) throws Exception {
+        http.csrf().disable();
         http.formLogin();
     }
 }

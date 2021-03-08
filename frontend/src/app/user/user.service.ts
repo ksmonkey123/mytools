@@ -18,6 +18,7 @@ export class UserService {
   }
 
   changePassword(oldPW: string, newPW: string): Observable<boolean> {
+    this.http.post('/rest/user/test', {}).subscribe();
     return this.http.post(this.urls.password, { password: oldPW, newPassword: newPW })
       .pipe(map(x => true));
   }

@@ -37,9 +37,15 @@ public class UserController {
         return AuthInfo.getUserInfo();
     }
 
+    @PostMapping("/test")
+    public void test() {
+        System.out.println(">>> test");
+    }
+
     @PostMapping("/password")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void changePassword(@Valid @RequestBody PasswordChangeRequest request) {
+        System.out.println(">>>PASSWORD");
         service.changePassword(service.getCurrentUser(), request.password, request.newPassword);
     }
 
