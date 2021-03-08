@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AppComponent} from "../app.component";
 import {UserService} from "./user.service";
 
@@ -9,11 +9,12 @@ import {UserService} from "./user.service";
 })
 export class UserComponent implements OnInit {
 
-  pwmodel: any = {};
+  pwmodel: { oldpassword?: string, newpassword?: string } = {};
 
   constructor(
     public root: AppComponent,
-    private userService: UserService) { }
+    private userService: UserService) {
+  }
 
   ngOnInit() {
   }
@@ -23,14 +24,15 @@ export class UserComponent implements OnInit {
   }
 
   changePassword() {
-    this.userService.changePassword(this.pwmodel.oldpassword, this.pwmodel.newpassword).
-    subscribe(
-      (b: boolean) => {
-        this.root.addAlert({ type: 'success', message: 'password changed', parent: this });
-      },
-      (error) =>
-        this.root.addErrorAlert(error, this)
-    )
+    if (this.pwmodel.oldpassword && this.pwmodel.newpassword) {
+      this.userService.changePassword(this.pwmodel.oldpassword, this.pwmodel.newpassword).subscribe(
+        (b: boolean) => {
+          this.root.addAlert({type: 'success', message: 'password changed', parent: this});
+        },
+        (error) =>
+          this.root.addErrorAlert(error, this)
+      )
+    }
   }
 
 }

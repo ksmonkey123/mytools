@@ -6,12 +6,17 @@
   </div>
   <div class="card-body">
     <form class="form-changePW" #f="ngForm" (ngSubmit)="changePassword()">
-      <input type="password" id="oldPW" class="form-control" placeholder="current password" name="password" [(ngModel)]="pwmodel.oldpassword"
-             required="">
-      <input type="password" id="newPW" class="form-control" placeholder="new password" name="password" [(ngModel)]="pwmodel.newpassword"
-             required="">
-      <br/>
-      <button class="btn btn-primary" type="submit">Save</button>
+      <div class="form-group">
+        <label for="oldPW">Current Password</label>
+        <input type="password" id="oldPW" class="form-control" placeholder="current password" name="password" [(ngModel)]="pwmodel.oldpassword"
+             required="" />
+      </div>
+      <div class="form-group">
+        <label for="newPW">New Password</label>
+        <input type="password" id="newPW" class="form-control" placeholder="new password" name="password" [(ngModel)]="pwmodel.newpassword"
+             required="" />
+      </div>
+      <button class="btn btn-primary" type="submit" [disabled]="!pwmodel.newpassword || !pwmodel.oldpassword">Save</button>
     </form>
   </div>
 </div>
