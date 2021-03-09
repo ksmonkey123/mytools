@@ -1,5 +1,6 @@
 package ch.awae.mytools.user;
 
+import ch.awae.mytools.exception.UserNotFoundException;
 import ch.awae.mytools.security.AuthInfo;
 import ch.awae.mytools.security.UserInfo;
 import ch.awae.mytools.validation.Role;
@@ -9,11 +10,12 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,15 +39,16 @@ public class UserController {
         return AuthInfo.getUserInfo();
     }
 
-    @PostMapping("/test")
-    public void test() {
-        System.out.println(">>> test");
+    @GetMapping("/{userId}")
+    public UserInfo getUserById(@PathVariable long userId) {
+        return repo.findById(userId)
+                .map(UserInfo::new)
+                .orElseThrow(() -> new UserNotFoundException(userId));
     }
 
     @PostMapping("/password")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void changePassword(@Valid @RequestBody PasswordChangeRequest request) {
-        System.out.println(">>>PASSWORD");
         service.changePassword(service.getCurrentUser(), request.password, request.newPassword);
     }
 
@@ -70,6 +73,16 @@ public class UserController {
         return allUsers.stream().map(UserInfo::new).collect(Collectors.toList());
     }
 
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/roles")
+    public List<String> getAllRoles() {
+        List<String> roles = new ArrayList<>();
+        for (UserRole role : UserRole.values()) {
+            roles.add(role.getValue());
+        }
+        return roles;
+    }
+
     static class UserCreationRequest {
         @NotEmpty
         @Size(min = 5, max = 20)
@@ -82,8 +95,7 @@ public class UserController {
     @Secured("ROLE_ADMIN")
     @PatchMapping("/{userId}/role")
     public UserInfo patchUserRoles(@PathVariable long userId, @Valid @RequestBody RolePatchRequest request) {
-        User user = repo.findById(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found"));
+        User user = repo.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
         if (request.add) {
             return new UserInfo(service.addRole(user, request.role));
         } else {
@@ -101,8 +113,8 @@ public class UserController {
     @Secured("ROLE_ADMIN")
     @PatchMapping("/{userId}")
     public UserInfo patchUser(@PathVariable long userId, @Valid @RequestBody PatchUserRequest request) {
-        User user = repo.findById(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found"));
+        User user = repo.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+
         if (request.password != null) {
             user = service.changePassword(user, null, request.password);
         }

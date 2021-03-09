@@ -21,7 +21,8 @@ export class AppComponent {
     new Link("Youtube-Download", "/ytdl/list", "ROLE_YTDL", "a youtube video downloader and transcoder")
   ];
 
-  user?: User;
+  isAdmin = false;
+  public user?: User;
   alerts: Alert[] = [];
 
   @ViewChild('dangerModal') private dangerModal: any;
@@ -38,6 +39,7 @@ export class AppComponent {
     this.userService.getUserInfo().subscribe(
       (u: User) => {
         this.user = u;
+        this.isAdmin = u.roles.includes("ROLE_ADMIN");
         this.links = this.links.filter(link => u.roles.includes(link.role));
       },
       (error: Error) => {

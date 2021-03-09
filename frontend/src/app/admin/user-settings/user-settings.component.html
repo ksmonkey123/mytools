@@ -1,0 +1,12 @@
+<div *ngIf="user">
+  <h1>User Administration: {{user.name}}</h1>
+
+  <app-user-role-management [userId]="user.id" [selfManagement]="isOwnUser"></app-user-role-management>
+
+  <app-change-password-form *ngIf="!isOwnUser && !(user.name === 'admin')" [userId]="user.id" [admin]="true"></app-change-password-form>
+
+  <div *ngIf="!isOwnUser" class="bottom-buttons">
+    <button *ngIf="!user.active" type="button" class="btn btn-success" (click)="onEnableUser(true)">Enable User</button>
+    <button *ngIf="user.active" type="button" class="btn btn-danger" (click)="onEnableUser(false)">Disable User</button>
+  </div>
+</div>

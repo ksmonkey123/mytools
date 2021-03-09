@@ -5,7 +5,8 @@ import java.util.Objects;
 
 public enum UserRole {
 
-    ADMIN("ROLE_ADMIN");
+    ADMIN("ROLE_ADMIN"),
+    CNC_POST_PROCESSOR("ROLE_CNCPP");
 
     private final String value;
 

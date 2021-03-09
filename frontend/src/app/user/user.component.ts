@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AppComponent} from "../app.component";
-import {UserService} from "./user.service";
+import {User, UserService} from "./user.service";
 
 @Component({
   selector: 'app-user',
@@ -9,30 +8,17 @@ import {UserService} from "./user.service";
 })
 export class UserComponent implements OnInit {
 
-  pwmodel: { oldpassword?: string, newpassword?: string } = {};
+  user ?: User;
+  isAdmin: boolean = false;
 
-  constructor(
-    public root: AppComponent,
-    private userService: UserService) {
+  constructor(private userService: UserService) {
   }
 
   ngOnInit() {
-  }
-
-  ngOnDestroy() {
-    this.root.closeAlerts(this);
-  }
-
-  changePassword() {
-    if (this.pwmodel.oldpassword && this.pwmodel.newpassword) {
-      this.userService.changePassword(this.pwmodel.oldpassword, this.pwmodel.newpassword).subscribe(
-        (b: boolean) => {
-          this.root.addAlert({type: 'success', message: 'password changed', parent: this});
-        },
-        (error) =>
-          this.root.addErrorAlert(error, this)
-      )
-    }
+    this.userService.getUserInfo().subscribe(user => {
+      this.user = user;
+      this.isAdmin = user.roles.includes('ROLE_ADMIN');
+    })
   }
 
 }

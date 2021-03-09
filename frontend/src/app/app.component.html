@@ -19,7 +19,7 @@
               ngbDropdownToggle>{{user.name}}</button>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="{{isCollapsed ? 'dropdown-menu-right' : '' }}">
         <button class="dropdown-item" (click)="openSettings()">Settings</button>
-        <!-- <button class="dropdown-item" (click)="openAdminPanel()" *ngIf="isAdmin">Admin Panel</button> -->
+        <button class="dropdown-item" (click)="openAdminPanel()" *ngIf="isAdmin">Admin Panel</button>
         <a class="dropdown-item" href="/logout">Logout</a>
       </div>
     </div>
