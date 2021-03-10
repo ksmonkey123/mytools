@@ -1,7 +1,7 @@
 package ch.awae.mytools.user;
 
 import javax.annotation.Nonnull;
-import java.util.Objects;
+import java.util.*;
 
 public enum UserRole {
 
@@ -26,6 +26,16 @@ public enum UserRole {
             }
         }
         throw new IllegalArgumentException();
+    }
+
+    public static List<String> sortByEnumOrder(@Nonnull Collection<? extends String> roles) {
+        List<String> result = new ArrayList<>();
+        for (UserRole role : values()) {
+            if (roles.contains(role.value)) {
+                result.add(role.value);
+            }
+        }
+        return result;
     }
 
 }

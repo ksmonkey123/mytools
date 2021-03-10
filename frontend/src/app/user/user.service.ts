@@ -8,11 +8,13 @@ export class UserService {
 
   urls = {
     info: '/rest/user/me',
-    getById: '/rest/user/',
+    createUser: '/rest/user',
+    getById: (id: number) => '/rest/user/' + id,
     password: '/rest/user/password',
-    patchUser: '/rest/user/',
+    patchUser: (id: number) => '/rest/user/' + id,
     userList: '/rest/user/list',
     allRoles: '/rest/user/roles',
+    patchUserRole: (id: number) => 'rest/user/' + id + '/role'
   };
 
   constructor(private http: HttpClient) {
@@ -23,7 +25,7 @@ export class UserService {
   }
 
   getUserInfoById(id: number): Observable<User> {
-    return this.http.get<User>(this.urls.getById + id);
+    return this.http.get<User>(this.urls.getById(id));
   }
 
   changePassword(oldPW: string, newPW: string): Observable<boolean> {
@@ -32,11 +34,11 @@ export class UserService {
   }
 
   setPassword(userId: number, password: string): Observable<User> {
-    return this.http.patch<User>(this.urls.patchUser + userId, {password: password})
+    return this.http.patch<User>(this.urls.patchUser(userId), {password: password})
   }
 
   enableUser(userId: number, enable: boolean): Observable<User> {
-    return this.http.patch<User>(this.urls.patchUser + userId, {active: enable})
+    return this.http.patch<User>(this.urls.patchUser(userId), {active: enable})
   }
 
   getAvailableRoles(): Observable<string[]> {
@@ -46,6 +48,15 @@ export class UserService {
   getUserList() {
     return this.http.get<User[]>(this.urls.userList);
   }
+
+  toggleUserRole(userId: number, role: string, add: boolean) {
+    return this.http.patch<User>(this.urls.patchUserRole(userId), {add: add, role: role});
+  }
+
+  createUser(username: string, password: string) {
+    return this.http.post<User>(this.urls.createUser, {username: username, password: password});
+  }
+
 }
 
 export interface User {

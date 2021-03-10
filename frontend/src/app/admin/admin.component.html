@@ -13,3 +13,7 @@
     </span>
   </button>
 </div>
+
+<button *ngIf="!showCreationForm" type="button" class="btn btn-primary add-user-button" (click)="onAddUser()">Add User</button>
+
+<app-create-user-form *ngIf="showCreationForm" (userCreatedEvent)="onUserCreated($event)"></app-create-user-form>

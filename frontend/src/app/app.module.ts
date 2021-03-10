@@ -14,6 +14,7 @@ import { AdminComponent } from './admin/admin.component';
 import { UserSettingsComponent } from './admin/user-settings/user-settings.component';
 import { ChangePasswordFormComponent } from './admin/user-settings/change-password-form/change-password-form.component';
 import { UserRoleManagementComponent } from './admin/user-settings/user-role-management/user-role-management.component';
+import { CreateUserFormComponent } from './admin/create-user-form/create-user-form.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { UserRoleManagementComponent } from './admin/user-settings/user-role-man
     ChangePasswordFormComponent,
     AdminComponent,
     UserSettingsComponent,
-    UserRoleManagementComponent
+    UserRoleManagementComponent,
+    CreateUserFormComponent
   ],
   imports: [
     BrowserModule,

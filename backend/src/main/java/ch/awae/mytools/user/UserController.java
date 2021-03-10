@@ -15,7 +15,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,7 +60,7 @@ public class UserController {
     }
 
     @Secured("ROLE_ADMIN")
-    @PostMapping("/create")
+    @PostMapping("")
     public UserInfo createUser(@Valid @RequestBody UserCreationRequest request) {
         return new UserInfo(service.createUser(request.username, request.password));
     }
@@ -85,7 +84,7 @@ public class UserController {
 
     static class UserCreationRequest {
         @NotEmpty
-        @Size(min = 5, max = 20)
+        @Size(min = 4, max = 20)
         public String username;
         @NotEmpty
         @Size(min = 8)

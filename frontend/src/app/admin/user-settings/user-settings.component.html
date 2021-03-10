@@ -5,8 +5,9 @@
 
   <app-change-password-form *ngIf="!isOwnUser && !(user.name === 'admin')" [userId]="user.id" [admin]="true"></app-change-password-form>
 
-  <div *ngIf="!isOwnUser" class="bottom-buttons">
-    <button *ngIf="!user.active" type="button" class="btn btn-success" (click)="onEnableUser(true)">Enable User</button>
-    <button *ngIf="user.active" type="button" class="btn btn-danger" (click)="onEnableUser(false)">Disable User</button>
+  <div class="bottom-buttons">
+    <button type="button" class="btn btn-secondary" [routerLink]="['/admin']">Back</button>
+    <button *ngIf="!isOwnUser && !user.active" type="button" class="btn btn-success" (click)="onEnableUser(true)">Enable User</button>
+    <button *ngIf="!isOwnUser && user.active" type="button" class="btn btn-danger" (click)="onEnableUser(false)">Disable User</button>
   </div>
 </div>

@@ -5,7 +5,7 @@ import { allIcons } from 'ngx-bootstrap-icons';
 
 @Component({
   selector: 'app-change-password-form',
-  inputs: ['userId', 'admin', 'isCollapsed'],
+  inputs: ['userId', 'admin'],
   templateUrl: './change-password-form.component.html',
   styleUrls: ['./change-password-form.component.css']
 })

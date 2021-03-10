@@ -49,6 +49,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUsername(username);
         user.setPassword(encoder.encode(password));
+        user.setEnabled(true);
         return repository.save(user);
     }
 

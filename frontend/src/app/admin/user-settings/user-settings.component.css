@@ -1,3 +1,7 @@
 .bottom-buttons {
   margin-top: 48px;
 }
+
+.bottom-buttons button {
+  margin-right: 20px;
+}

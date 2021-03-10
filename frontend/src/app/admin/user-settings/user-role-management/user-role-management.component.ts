@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AppComponent} from "../../../app.component";
 import {User, UserService} from "../../../user/user.service";
 
@@ -10,6 +10,8 @@ import {User, UserService} from "../../../user/user.service";
 })
 export class UserRoleManagementComponent implements OnInit {
 
+  @Output() userUpdatedEvent = new EventEmitter<User>();
+
   userId: number | null = null
   isCollapsed: boolean = true
   selfManagement: boolean = true
@@ -17,8 +19,9 @@ export class UserRoleManagementComponent implements OnInit {
   roles: string[] = []
   user?: User
 
-  constructor(private root : AppComponent,
-              private userService: UserService) { }
+  constructor(private root: AppComponent,
+              private userService: UserService) {
+  }
 
   ngOnInit(): void {
     if (this.userId) {
@@ -31,7 +34,13 @@ export class UserRoleManagementComponent implements OnInit {
     this.root.closeAlerts(this)
   }
 
-  onToggleRole(role: string) {
-    // TODO: implementation
+  onToggleRole(userId: number, role: string, enable: boolean) {
+    this.userService.toggleUserRole(userId, role, enable).subscribe(
+      user => {
+        this.user = user;
+        this.userUpdatedEvent.emit(user)
+      },
+      error => this.root.addErrorAlert(error, this)
+    )
   }
 }

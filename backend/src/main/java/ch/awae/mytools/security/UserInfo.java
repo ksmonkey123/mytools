@@ -1,9 +1,12 @@
 package ch.awae.mytools.security;
 
 import ch.awae.mytools.user.User;
+import ch.awae.mytools.user.UserRole;
 
 import javax.annotation.Nonnull;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class UserInfo implements Principal {
@@ -23,8 +26,8 @@ public class UserInfo implements Principal {
         return user.getId();
     }
 
-    public Set<String> getRoles() {
-        return user.getRoles();
+    public List<String> getRoles() {
+        return UserRole.sortByEnumOrder(user.getRoles());
     }
 
     public boolean isActive() {

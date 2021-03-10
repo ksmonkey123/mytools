@@ -1,3 +1,7 @@
 .badge-row {
   margin-top: 20px;
 }
+
+.badge-row > span {
+  margin-right: 15px;
+}

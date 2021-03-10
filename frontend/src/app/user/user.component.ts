@@ -21,4 +21,7 @@ export class UserComponent implements OnInit {
     })
   }
 
+  onUserUpdated(user: User) {
+    this.user = user;
+  }
 }
