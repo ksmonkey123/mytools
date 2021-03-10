@@ -14,7 +14,7 @@
           <div class="form-check form-check-inline role">
             <input class="form-check-input" type="checkbox" name="{{role}}" id="checkbox-{{role}}"
                    [checked]="user.roles.includes(role)"
-                   [disabled]="(selfManagement || user.name === 'admin') && role === 'ROLE_ADMIN'"
+                   [disabled]="selfManagement && role === 'ROLE_ADMIN'"
                    (click)="onToggleRole(user.id, role, !user.roles.includes(role))">
             <label class="form-check-label" for="checkbox-{{role}}">{{role}}</label>
           </div>

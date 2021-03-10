@@ -33,7 +33,6 @@ export class CreateUserFormComponent implements OnInit {
       this.userService.createUser(this.userModel.username, this.userModel.password).subscribe(
         user => {
           this.clearInput()
-          //this.root.addAlert({type: 'success', message: 'user created', parent: this})
           this.userCreatedEvent.emit(user)
         },
         error => this.root.addErrorAlert(error, this)

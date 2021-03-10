@@ -3,7 +3,7 @@
   <h4 *ngIf="user.roles.length > 0" class="badge-row">
     <span *ngFor="let role of user.roles" class="badge badge-primary">{{role}}</span>
   </h4>
-  <app-user-role-management *ngIf="isAdmin"
+  <app-user-role-management *ngIf="isAdmin && user.name !== 'admin'"
                             [userId]="user.id"
                             (userUpdatedEvent)="onUserUpdated($event)"></app-user-role-management>
   <app-change-password-form [userId]="user.id"></app-change-password-form>

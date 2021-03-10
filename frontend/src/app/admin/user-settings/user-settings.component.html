@@ -1,9 +1,9 @@
 <div *ngIf="user">
-  <h1>User Administration: {{user.name}}</h1>
+  <h1>User Administration: {{user.name}} <span *ngIf="!user.active">(inactive)</span></h1>
 
-  <app-user-role-management [userId]="user.id" [selfManagement]="isOwnUser"></app-user-role-management>
+  <app-user-role-management *ngIf="user.name !== 'admin'" [userId]="user.id" [selfManagement]="isOwnUser"></app-user-role-management>
 
-  <app-change-password-form *ngIf="!isOwnUser && !(user.name === 'admin')" [userId]="user.id" [admin]="true"></app-change-password-form>
+  <app-change-password-form *ngIf="!isOwnUser" [userId]="user.id" [admin]="true"></app-change-password-form>
 
   <div class="bottom-buttons">
     <button type="button" class="btn btn-secondary" [routerLink]="['/admin']">Back</button>

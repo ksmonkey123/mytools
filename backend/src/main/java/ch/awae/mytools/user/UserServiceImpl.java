@@ -36,9 +36,6 @@ public class UserServiceImpl implements UserService {
         if (oldPassword != null && !encoder.matches(oldPassword, user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad credentials");
         }
-        if ("admin".equals(user.getUsername())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "cannot change password of default user");
-        }
         user.setPassword(encoder.encode(newPassword));
         return user;
     }
@@ -62,6 +59,10 @@ public class UserServiceImpl implements UserService {
     @Nonnull
     @Override
     public User addRole(@Nonnull User user, @Nonnull String role) {
+        if ("admin".equals(user.getUsername())) {
+            // cannot change roles of default admin
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "cannot change roles of default admin!");
+        }
         user.getRoles().add(role);
         return user;
     }
@@ -69,15 +70,14 @@ public class UserServiceImpl implements UserService {
     @Nonnull
     @Override
     public User removeRole(@Nonnull User user, @Nonnull String role) {
-        // special validations for admin role
+        if ("admin".equals(user.getUsername())) {
+            // cannot change roles of default admin
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "cannot change roles of default admin!");
+        }
         if (UserRole.ADMIN.getValue().equals(role)) {
             // cannot remove admin from yourself
             if (AuthInfo.getUserInfo().getId() == user.getId()) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "cannot de-admin yourself!");
-            }
-            // cannot remove admin permissions from default admin user
-            if ("admin".equals(user.getUsername())) {
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "cannot de-admin default admin!");
             }
         }
         user.getRoles().remove(role);
