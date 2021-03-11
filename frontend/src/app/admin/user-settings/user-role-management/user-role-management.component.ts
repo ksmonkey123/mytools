@@ -38,6 +38,7 @@ export class UserRoleManagementComponent implements OnInit {
     this.userService.toggleUserRole(userId, role, enable).subscribe(
       user => {
         this.user = user;
+        this.root.setUser(user);
         this.userUpdatedEvent.emit(user)
       },
       error => this.root.addErrorAlert(error, this)

@@ -21,6 +21,8 @@ public class CncRawGcodeFile {
     @OneToOne(optional = false)
     private DatastoreEntry datastoreEntry;
 
+    private int projectOrder;
+
     public Long getId() {
         return id;
     }
@@ -33,11 +35,27 @@ public class CncRawGcodeFile {
         this.project = project;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public DatastoreEntry getDatastoreEntry() {
         return datastoreEntry;
     }
 
     public void setDatastoreEntry(DatastoreEntry datastoreEntry) {
         this.datastoreEntry = datastoreEntry;
+    }
+
+    public int getProjectOrder() {
+        return projectOrder;
+    }
+
+    public void setProjectOrder(int projectOrder) {
+        this.projectOrder = projectOrder;
     }
 }

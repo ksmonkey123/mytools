@@ -1,1 +1,12 @@
-<p>home works!</p>
+<div *ngIf="root.user" class="row">
+  <div *ngFor="let link of root.links" class="col-sm-6 col-lg-4">
+    <div class="card">
+      <div class="card-header bg-primary">
+        <button class="btn btn-primary text-white stretched-link app-button" [routerLink]="link.route">{{link.text}}</button>
+      </div>
+      <div class="card-body">
+        <p class="card-text">{{link.desc}}</p>
+      </div>
+    </div>
+  </div>
+</div>

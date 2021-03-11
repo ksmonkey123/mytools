@@ -3,10 +3,12 @@ package ch.awae.mytools.cncpp.model;
 import ch.awae.mytools.user.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "cncpp_project")
-public class CncProject extends CncRawGcodeFile {
+public class CncProject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +19,11 @@ public class CncProject extends CncRawGcodeFile {
 
     @Column(nullable = false, length = 40)
     private String name;
+
+    @OneToMany
+    @JoinColumn(name = "project_id")
+    @OrderColumn(name = "projectOrder")
+    private List<CncRawGcodeFile> rawGcode = new ArrayList<>();
 
     public CncProject() {}
 
@@ -43,5 +50,9 @@ public class CncProject extends CncRawGcodeFile {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<CncRawGcodeFile> getRawGcode() {
+        return rawGcode;
     }
 }
