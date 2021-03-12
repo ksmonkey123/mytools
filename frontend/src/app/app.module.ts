@@ -15,7 +15,9 @@ import { UserSettingsComponent } from './admin/user-settings/user-settings.compo
 import { ChangePasswordFormComponent } from './admin/user-settings/change-password-form/change-password-form.component';
 import { UserRoleManagementComponent } from './admin/user-settings/user-role-management/user-role-management.component';
 import { CreateUserFormComponent } from './admin/create-user-form/create-user-form.component';
-import { CncppRootComponent } from './cncpp-root/cncpp-root.component';
+import { CncppRootComponent } from './cncpp/cncpp-root/cncpp-root.component';
+import { CncppProjectComponent } from './cncpp/cncpp-project/cncpp-project.component';
+import {CncProjectService} from "./cncpp/project.service";
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { CncppRootComponent } from './cncpp-root/cncpp-root.component';
     UserSettingsComponent,
     UserRoleManagementComponent,
     CreateUserFormComponent,
-    CncppRootComponent
+    CncppRootComponent,
+    CncppProjectComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import { CncppRootComponent } from './cncpp-root/cncpp-root.component';
     FormsModule
   ],
   providers: [
-    UserService
+    UserService,
+    CncProjectService
   ],
   bootstrap: [AppComponent]
 })

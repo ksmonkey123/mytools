@@ -1,0 +1,24 @@
+<h1>CNC Post-Processor</h1>
+
+<form (ngSubmit)="onCreateProject()">
+  <div class="input-group project-creation">
+    <div class="input-group-prepend">
+      <label class="input-group-text" for="newProjectName">New Project</label>
+    </div>
+    <input type="text" class="form-control" id="newProjectName" name="name" placeholder="Project Name" [(ngModel)]="newProjectName">
+    <div class="input-group-append">
+      <button class="btn btn-primary" type="submit" [disabled]="newProjectName.length < 4">
+        Create
+      </button>
+    </div>
+  </div>
+</form>
+
+<h2>Previous Projects</h2>
+<ul class="list-group project-list">
+  <li *ngFor="let project of projects" class="list-group-item list-group-item-action d-flex align-items-center">
+    <button type="button" class="btn btn-link text-decoration-none text-body text-left flex-fill" [routerLink]="[project.id]">{{project.name}}</button>
+    <span class="badge badge-primary badge-pill">{{project.fileCount}}</span>&nbsp;&nbsp;
+    <button class="btn btn-danger" type="button" (click)="onArchiveProject(project.id)"><i-bs name="{{'archive'}}"></i-bs></button>
+  </li>
+</ul>

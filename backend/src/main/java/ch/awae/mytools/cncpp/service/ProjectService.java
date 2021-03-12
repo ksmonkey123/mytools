@@ -6,7 +6,7 @@ import ch.awae.mytools.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -22,11 +22,19 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
-    public Stream<CncProject> getProjectsOfCurrentUser() {
-        return projectRepository.findByUser(userService.getCurrentUser());
+    public Stream<CncProject> getProjectList() {
+        return projectRepository.findByUserAndArchivedOrderByIdDesc(userService.getCurrentUser(), false);
     }
 
-    public Optional<CncProject> getProjectOfCurrentUser(long projectId) {
+    public Optional<CncProject> getProject(long projectId) {
         return projectRepository.findByIdAndUser(projectId, userService.getCurrentUser());
+    }
+
+    @Nonnull
+    public CncProject createProject(@Nonnull String name) {
+        CncProject project = new CncProject();
+        project.setUser(userService.getCurrentUser());
+        project.setName(name);
+        return projectRepository.saveAndFlush(project);
     }
 }

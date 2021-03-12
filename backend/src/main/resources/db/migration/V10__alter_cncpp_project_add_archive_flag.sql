@@ -1,0 +1,1 @@
+alter table cncpp_project add column (archived boolean not null);

@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 @Repository
 public interface CncProjectRepository extends JpaRepository<CncProject, Long> {
 
-    Stream<CncProject> findByUser(User currentUser);
+    Stream<CncProject> findByUserAndArchivedOrderByIdDesc(User currentUser, boolean archived);
 
     Optional<CncProject> findByIdAndUser(long projectId, User currentUser);
 

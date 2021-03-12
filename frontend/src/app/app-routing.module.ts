@@ -4,7 +4,8 @@ import {HomeComponent} from "./home/home.component";
 import {UserComponent} from "./user/user.component";
 import {AdminComponent} from "./admin/admin.component";
 import {UserSettingsComponent} from "./admin/user-settings/user-settings.component";
-import {CncppRootComponent} from "./cncpp-root/cncpp-root.component";
+import {CncppRootComponent} from "./cncpp/cncpp-root/cncpp-root.component";
+import {CncppProjectComponent} from "./cncpp/cncpp-project/cncpp-project.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'admin', component: AdminComponent},
   {path: 'admin/user/:id', component: UserSettingsComponent},
   {path: 'cncpp', component: CncppRootComponent},
+  {path: 'cncpp/:id', component: CncppProjectComponent},
 ];
 
 @NgModule({

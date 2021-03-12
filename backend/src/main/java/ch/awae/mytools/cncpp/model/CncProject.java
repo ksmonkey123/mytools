@@ -20,17 +20,14 @@ public class CncProject {
     @Column(nullable = false, length = 40)
     private String name;
 
-    @OneToMany
+    private boolean archived;
+
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id")
     @OrderColumn(name = "projectOrder")
     private List<CncRawGcodeFile> rawGcode = new ArrayList<>();
 
     public CncProject() {}
-
-    public CncProject(User user, String name) {
-        this.user = user;
-        this.name = name;
-    }
 
     public Long getId() {
         return id;
@@ -54,5 +51,13 @@ public class CncProject {
 
     public List<CncRawGcodeFile> getRawGcode() {
         return rawGcode;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 }

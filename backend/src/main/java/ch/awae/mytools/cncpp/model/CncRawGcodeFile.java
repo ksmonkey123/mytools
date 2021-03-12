@@ -18,7 +18,7 @@ public class CncRawGcodeFile {
     @Column(nullable = false)
     private String name;
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     private DatastoreEntry datastoreEntry;
 
     private int projectOrder;
